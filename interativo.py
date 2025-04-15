@@ -15,7 +15,7 @@ def criar_ecossistema():
         "Lobos": 3,
         "Insetos": 4,
         "Sapos": 3,
-        "Decompositores": 6
+        "Decompositores": 2
     }
     
     for especie, energia in especies.items():
@@ -28,6 +28,8 @@ def criar_ecossistema():
     eco.add_edge("Insetos", "Sapos", weight=1)
     eco.add_edge("Decompositores", "Plantas", weight=2)
     eco.add_edge("Lobos", "Decompositores", weight=1)
+    eco.add_edge("Coelhos", "Decompositores", weight=1)
+    eco.add_edge("Sapos", "Decompositores", weight=1)
     
     return eco
 
@@ -49,7 +51,7 @@ def extincao_cascata(grafo, especie_alvo):
         
         # Coleta dependentes antes de remover o nó
         dependentes = list(grafo.successors(atual))
-        
+        atualizar_energia(grafo, atual)
         # Remove a espécie e adiciona à lista de extintas
         grafo.remove_node(atual)
         extintas.append(atual)
@@ -57,21 +59,22 @@ def extincao_cascata(grafo, especie_alvo):
         # Verifica dependentes sem outras fontes de alimento
         for dep in dependentes:
             # Se não tem mais predecessores (fontes de energia), entra na fila
-            if len(list(grafo.predecessors(dep))) == 0:
+            if len(list(grafo.predecessors(dep))) == 0 or grafo.nodes[dep]["energia"] <= 0:
                 fila.append(dep)
     
     print(f"Extinção em cascata: {extintas}")
 
 def atualizar_energia(grafo, especie_extinta):
+    dependentes_extintos = []
     # Reduz energia de dependentes diretos
-    for dependente in grafo.predecessors(especie_extinta):
+    for dependente in grafo.successors(especie_extinta):
         if "energia" in grafo.nodes[dependente]:
-            peso_perdido = grafo[dependente][especie_extinta]["weight"]
-            grafo.nodes[dependente]["energia"] -= peso_perdido
+            peso_perdido = grafo[especie_extinta][dependente]["weight"]
             
+            grafo.nodes[dependente]["energia"] -= peso_perdido
             # Se energia <= 0, marca para extinção
             if grafo.nodes[dependente]["energia"] <= 0:
-                extincao_cascata(grafo, dependente)
+                dependentes_extintos.append(dependente)
 
 # ----------------------------------------
 # Função de Visualização
@@ -133,7 +136,7 @@ def adicionar_especie(grafo):
 
 def main():
     eco = criar_ecossistema()
-    
+
     while True:
         print("\n=== Menu ===")
         print("1. Extinguir espécie")
@@ -148,7 +151,6 @@ def main():
             especie = input("Espécie a extinguir: ").strip()
             if especie in eco.nodes():
                 extincao_cascata(eco, especie)
-                atualizar_energia(eco, especie)
             else:
                 print("Espécie não encontrada!")
         
