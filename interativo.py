@@ -97,8 +97,10 @@ def plot_ecossistema(grafo):
     
     edge_labels = nx.get_edge_attributes(grafo, "weight")
     nx.draw_networkx_edge_labels(grafo, pos, edge_labels=edge_labels)
-    plt.show(block=False)  # Não bloqueia a execução
-    plt.pause(2)  # Exibe o gráfico por 2 segundos
+    plt.savefig("ecossistema.png")
+    # plt.show() so deve ser utilizado em ambientes interativos
+    # plt.show(block=False)  # Não bloqueia a execução
+    # plt.pause(2)  # Exibe o gráfico por 2 segundos
 
 # ----------------------------------------
 # Novas Funções para Interação Avançada
