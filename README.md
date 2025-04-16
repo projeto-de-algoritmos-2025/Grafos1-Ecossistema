@@ -11,6 +11,12 @@
 ## Sobre 
 O projeto "Ecossistema" é uma simulação interativa de uma cadeia alimentar modelada como um grafo direcionado, utilizando a biblioteca NetworkX em Python. O objetivo é demonstrar conceitos de grafos, como nós (espécies), arestas (relações predador-presa) e propagação de efeitos em redes, visando assim mostrar como um ecossistema pode ser delicado e dinâmico.
 
+### Visualização do ecossistema
+O projeto permite a visualização do ecossistema atual, exibindo sua estrutura e energia. A função `plot_ecossistema` recebe um grafo e utiliza a biblioteca NetworkX para gerar um gráfico de dispersão, com nós representando espécies e arestas representando relações entre elas.
+
+### Simulação de extinção
+A simulação de extinção é realizada através da função `extincao_cascata`, que recebe um grafo e uma espécie alvo. A função verifica se a espécie alvo está presente no grafo e, se sim, realiza uma busca em profundidade para encontrar as espécies que dependem dela. Em seguida, a função atualiza a energia de cada espécie e remove a espécie alvo do grafo.
+
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
 
