@@ -18,7 +18,9 @@ O projeto permite a visualização do ecossistema atual, exibindo sua estrutura 
 A simulação de extinção é realizada através da função `extincao_cascata`, que recebe um grafo e uma espécie alvo. A função verifica se a espécie alvo está presente no grafo e, se sim, realiza uma busca em profundidade para encontrar as espécies que dependem dela. Em seguida, a função atualiza a energia de cada espécie e remove a espécie alvo do grafo.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+![image](https://github.com/user-attachments/assets/b2fd8258-35c4-43b9-9182-feec97373b42)
+![image](https://github.com/user-attachments/assets/33c4e2c9-2863-4e2a-8080-87ea1af71921)
+![image](https://github.com/user-attachments/assets/dce5130f-1f8a-4814-8321-6e94003839de)
 
 ## Instalação 
 **Linguagem**: Python<br>
