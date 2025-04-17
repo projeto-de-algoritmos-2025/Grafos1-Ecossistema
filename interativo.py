@@ -107,28 +107,74 @@ def plot_ecossistema(grafo):
 # ----------------------------------------
 
 def adicionar_especie(grafo):
-    nome = input("Nome da nova espécie: ").strip()
-    if nome in grafo.nodes():
-        print(f"Erro: {nome} já existe!")
-        return
+    # Solicitar nome único para a nova espécie
+    while True:
+        nome = input("Nome da nova espécie: ").strip()
+        if nome not in grafo.nodes():
+            break
+        print(f"Erro: {nome} já existe! Tente novamente.")
     
-    energia = int(input("Energia inicial (ex: 5): "))
+    # Solicitar energia inicial com validação
+    while True:
+        try:
+            energia = int(input("Energia inicial (ex: 5): "))
+            if energia >= 0:  # Garantir que a energia não seja negativa
+                break
+            print("Erro: A energia deve ser um número inteiro não negativo.")
+        except ValueError:
+            print("Erro: Insira um número inteiro para a energia.")
+    
+    # Adicionar o nó ao grafo
     grafo.add_node(nome, energia=energia)
     
-    # Conectar a outras espécies
-    predecessores = input("Espécies que ela come (separadas por vírgula): ").split(",")
-    for pred in predecessores:
-        pred = pred.strip()
-        if pred in grafo.nodes():
-            peso = int(input(f"Peso de {pred} para {nome}: "))
-            grafo.add_edge(pred, nome, weight=peso)
+    # Mostrar espécies existentes para referência
+    print("\nEspécies existentes:", list(grafo.nodes()))
     
-    sucessores = input("Espécies que a comem (separadas por vírgula): ").split(",")
-    for suc in sucessores:
+    # Adicionar predecessores (espécies que ela come)
+    while True:
+        pred_input = input("Espécies que ela come (separadas por vírgula, ou 'fim' para terminar): ").strip()
+        if pred_input.lower() == 'fim':
+            break
+        if not pred_input:  # Caso o usuário pressione Enter sem digitar nada
+            break
+        predecessores = pred_input.split(",")
+        for pred in predecessores:
+            pred = pred.strip()
+            if pred in grafo.nodes():
+                while True:
+                    try:
+                        peso = int(input(f"Peso de {pred} para {nome}: "))
+                        if peso > 0:  # Garantir peso positivo
+                            grafo.add_edge(pred, nome, weight=peso)
+                            break
+                        print("Erro: O peso deve ser um número inteiro positivo.")
+                    except ValueError:
+                        print("Erro: Insira um número inteiro para o peso.")
+            else:
+                print(f"Aviso: {pred} não encontrada no ecossistema.")
+    
+    # Adicionar sucessores (espécies que a comem)
+    while True:
+        suc_input = input("Espécies que a comem (separadas por vírgula, ou 'fim' para terminar): ").strip()
+        if suc_input.lower() == 'fim':
+            break
+        if not suc_input:  # Caso o usuário pressione Enter sem digitar nada
+            break
+        sucessores = suc_input.split(",")
+        for suc in sucessores:
             suc = suc.strip()
             if suc in grafo.nodes():
-                peso = int(input(f"Peso de {nome} para {suc}: "))
-                grafo.add_edge(nome, suc, weight=peso)
+                while True:
+                    try:
+                        peso = int(input(f"Peso de {nome} para {suc}: "))
+                        if peso > 0:  # Garantir peso positivo
+                            grafo.add_edge(nome, suc, weight=peso)
+                            break
+                        print("Erro: O peso deve ser um número inteiro positivo.")
+                    except ValueError:
+                        print("Erro: Insira um número inteiro para o peso.")
+            else:
+                print(f"Aviso: {suc} não encontrada no ecossistema.")
     
     print(f"{nome} adicionada com sucesso!")
 
