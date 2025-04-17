@@ -38,7 +38,7 @@ A simulação de extinção é realizada através da função `extincao_cascata`
 ```
 3. Crie um ambiente virtual (opcional, mas recomendado):
 ```bash
-    python -m venv env
+    python3 -m venv env
     source venv/bin/activate  # Linux/Mac
     venv\Scripts\activate     # Windows
 ```
@@ -50,7 +50,7 @@ A simulação de extinção é realizada através da função `extincao_cascata`
 ## Uso 
 1. Execute o programa:
 ```bash
-    python interativo.py
+    python3 interativo.py
 ```
 2. Siga o menu interativo:
 * Digite 1 para extinguir uma espécie (ex.: "Coelhos").
