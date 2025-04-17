@@ -15,7 +15,9 @@ def criar_ecossistema():
         "Lobos": 3,
         "Insetos": 4,
         "Sapos": 3,
-        "Decompositores": 2
+        "Decompositores": 2,
+        "Ratos": 2,
+        "Aguias": 2
     }
     
     for especie, energia in especies.items():
@@ -30,6 +32,9 @@ def criar_ecossistema():
     eco.add_edge("Lobos", "Decompositores", weight=1)
     eco.add_edge("Coelhos", "Decompositores", weight=1)
     eco.add_edge("Sapos", "Decompositores", weight=1)
+    eco.add_edge("Plantas", "Ratos", weight=1)
+    eco.add_edge("Ratos", "Aguias", weight=2)
+    eco.add_edge("Sapos", "Aguias", weight=1)
     
     return eco
 
